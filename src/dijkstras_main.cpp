@@ -6,7 +6,7 @@ string get_arg(int argc, char *argv[], string def) {
 }
 
 int main(int argc, char *argv[]) {
-    string filename = get_arg(argc, argv, "src/small.txt");
+    string filename = get_arg(argc, argv, "src/largest.txt");
     Graph G;
     file_to_graph(filename, G);
     int source = 0;

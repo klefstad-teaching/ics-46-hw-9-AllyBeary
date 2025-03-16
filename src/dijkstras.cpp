@@ -3,6 +3,12 @@
 #include <iostream>
 using namespace std;
 
+pair<int, int> extractVertexWithMinWeight(priority_queue<pair<int, int>>& minHeap) {
+    pair<int, int> topElement = minHeap.top(); 
+    minHeap.pop();
+    return topElement; 
+}
+
 vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& previous) { // computes the shortest paths for each of the vertices from the start vertex
     int numOfVertices = G.size();
     vector<int> distances(numOfVertices, INF);
@@ -12,8 +18,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     priority_queue<pair<int, int>> minHeap; // pair<vertex, weight>
     minHeap.push({source, 0}); 
     while (!minHeap.empty()) {
-        int u = minHeap.top().first; // get the vertex u with the smallest distance from 
-        minHeap.pop();
+        auto [u, minWeight] = extractVertexWithMinWeight(minHeap); // get the vertex u with the smallest distance from 
         if (visited[u]) continue;
         visited[u] = true;
         for (const Edge& e : G[u]) {
