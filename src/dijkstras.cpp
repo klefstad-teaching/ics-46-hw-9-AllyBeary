@@ -15,7 +15,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector<bool> visited(numOfVertices, false);
     distances[source] = 0; // start vertex source has a distance of 0 from itself
     previous[source] = -1; // start vertex source does not have a previous vertex (predecessor) so -1 
-    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap; // pair<vertex, weight>
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap; // pair<weight, vertex>
     minHeap.push({0, source}); 
     while (!minHeap.empty()) {
         auto [u, minWeight] = extractVertexWithMinWeight(minHeap); // get the vertex u with the smallest distance from 
@@ -37,7 +37,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
 
 vector<int> extract_shortest_path(const vector<int>& distances, const vector<int>& previous, int destination) {
     vector<int> v;
-    if (distances[destination] == INF) return v;
+    // if (distances[destination] == INF) return {};
     for (int dest = destination; dest != -1; dest = previous[dest]) 
         v.push_back(dest);
     reverse(v.begin(), v.end());
@@ -45,10 +45,6 @@ vector<int> extract_shortest_path(const vector<int>& distances, const vector<int
 }
 
 void print_path(const vector<int>& v, int total) {
-    // if (v.empty()) {
-    //     cout << "No path found" << endl;
-    //     return;
-    // }
     for (const int& vertex : v) {
         cout << vertex << " ";
     }
