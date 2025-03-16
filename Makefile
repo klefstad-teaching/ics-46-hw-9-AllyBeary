@@ -1,6 +1,7 @@
 F = -std=c++20 -Wall -Wextra -Wpedantic -Wfatal-errors
 P = ladder
 def: $P
+
 main: src/dijkstras_main.cpp src/dijkstras.cpp
 	g++ $F src/dijkstras_main.cpp src/dijkstras.cpp -o main
 

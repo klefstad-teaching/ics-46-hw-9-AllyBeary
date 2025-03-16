@@ -1,4 +1,0 @@
-car
-cat
-chat
-cheat
