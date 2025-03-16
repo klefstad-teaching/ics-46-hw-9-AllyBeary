@@ -3,7 +3,7 @@
 #include <iostream>
 using namespace std;
 
-pair<int, int> extractVertexWithMinWeight(priority_queue<pair<int, int>>& minHeap) {
+pair<int, int> extractVertexWithMinWeight(priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>>& minHeap) {
     pair<int, int> topElement = minHeap.top(); 
     minHeap.pop();
     return {topElement.second, topElement.first};
@@ -15,10 +15,10 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
     vector<bool> visited(numOfVertices, false);
     distances[source] = 0; // start vertex source has a distance of 0 from itself
     previous[source] = -1; // start vertex source does not have a previous vertex (predecessor) so -1 
-    priority_queue<pair<int, int>> minHeap; // pair<vertex, weight>
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> minHeap; // pair<vertex, weight>
     minHeap.push({0, source}); 
     while (!minHeap.empty()) {
-        auto [minWeight, u] = extractVertexWithMinWeight(minHeap); // get the vertex u with the smallest distance from 
+        auto [u, minWeight] = extractVertexWithMinWeight(minHeap); // get the vertex u with the smallest distance from 
         if (visited[u]) continue;
         visited[u] = true;
         for (const Edge& e : G[u]) {
@@ -28,7 +28,7 @@ vector<int> dijkstra_shortest_path(const Graph& G, int source, vector<int>& prev
             if (!visited[v] && altDst < distances[v]) { // if alternative distance is shorter than the adjacent vertex v's current distance
                 distances[v] = altDst; // update adjacent vertex v's distance to alternative distance
                 previous[v] = u; // update adjacent vertex v's predecessor to be current vertex u
-                minHeap.push({distances[v], v}); // push the updated distance for adjacent vertex v to the minority heap
+                minHeap.push({altDst, v}); // push the updated distance for adjacent vertex v to the minority heap
             }
         }
     }
